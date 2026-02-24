@@ -1,0 +1,54 @@
+ALGORITMO SistemaGestaoTI - Unex
+
+VARIAVEIS 
+    lista_ativos: Lista 
+    arquivo_banco: Texto
+
+FUNÇÃO carregar_dados()
+    SE arquivo_banco existe:
+        ABRIR arquivo para leitura
+        PARA CADA linha NO arquivo:
+            SEPARAR linha por "|"
+            CRIAR ativo (dicionário) com id, nome, tipo, local
+            ADICIONAR ativo na lista_ativos
+    SENÃO:
+        RETORNAR lista vazia
+
+FUNÇÃO salvar_dados()
+    ABRIR arquivo_banco para escrita
+    PARA CADA ativo NA lista_ativos:
+        FORMATAR linha = id + "|" + nome + "|" + tipo + "|" + local
+        ESCREVER linha no arquivo
+
+FUNÇÃO cadastrar_ativo()
+    LER nome, tipo, local
+    GERAR novo ID (tamanho da lista + 1)
+    CRIAR pacote de dados (dicionário)
+    ADICIONAR na lista_ativos
+    ESCREVER "Sucesso"
+
+FUNÇÃO listar_ativos()
+    PARA CADA item NA lista_ativos:
+        IMPRIMIR id, nome, tipo, local formatado
+
+FUNÇÃO buscar_ativo()
+    LER termo_busca
+    PARA CADA item NA lista_ativos:
+        SE termo_busca ESTIVER NO nome do item:
+            IMPRIMIR item
+
+INICIO (Programa Principal)
+    CHAMAR carregar_dados()
+    ENQUANTO verdadeiro:
+        IMPRIMIR Menu (1.Cadastrar, 2.Listar, 3.Buscar, 4.Sair)
+        LER opcao
+        
+        ESCOLHA opcao:
+            CASO "1": CHAMAR cadastrar_ativo()
+            CASO "2": CHAMAR listar_ativos()
+            CASO "3": CHAMAR buscar_ativo()
+            CASO "4": 
+                CHAMAR salvar_dados()
+                QUEBRAR loop
+            PADRÃO: IMPRIMIR "Opção Inválida"
+FIM ALGORITMO
